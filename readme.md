@@ -29,7 +29,7 @@ manifest_url
 input_url
 only_broken
 fetch_from_file
-filepath (required only when fetchFromFile=true)
+filepath (required only when fetch_from_file=true)
 *** add your own domain list json in shared directory and provide name in filepath ***
 ```
 
