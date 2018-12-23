@@ -13,10 +13,10 @@ class LinkCheckerSpider(scrapy.Spider):
         'RETRY_HTTP_CODES': [],
     }
 
-	def __init__(self, manifest_url, input_url, fetchFromFile='false', onlyBroken='false', *args, **kwargs):
+	def __init__(self, manifest_url, input_url, fetch_from_file='false', only_broken='false', *args, **kwargs):
 		"""Initializes the instance"""
 		self.input_url = input_url
-		self.onlyBroken = onlyBroken
+		self.only_broken = only_broken
 		super(LinkCheckerSpider, self).__init__(*args, **kwargs)
 	
 		"""Fetch manifest from specified URL"""
@@ -26,7 +26,7 @@ class LinkCheckerSpider(scrapy.Spider):
 		self.asset_json = json.loads(request.data)
 
 		"""Generate URL list to be crawl"""
-		if fetchFromFile == 'true':
+		if fetch_from_file == 'true':
 			"""Fetch domain list"""
 			with open(os.path.join(ApplicationConfig.get_shared_root(), self.filepath), 'r') as domains_file:
 			    domain_json = domains_file.read()
@@ -50,7 +50,7 @@ class LinkCheckerSpider(scrapy.Spider):
 			self.crawler.stats.inc_value('non_text_response')
 			return
 
-		if self.onlyBroken == 'true':
+		if self.only_broken == 'true':
 			if response.status >= 400 and response.status <= 599:
 				yield {
 					'url': response.url,
