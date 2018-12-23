@@ -1,6 +1,6 @@
 # Link Checker
 
-Link Checker is a Python Scrapy project to check broken links.
+Link Checker is a Python Scrapy project to check link status.
 
 ## Dependencies
 
