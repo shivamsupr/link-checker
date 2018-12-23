@@ -30,6 +30,7 @@ input_url
 onlyBroken
 fetchFromFile
 filepath (required only when fetchFromFile=true)
+# *** add your own domain list json in shared directory and provide name in filepath ***
 ```
 
 ## Contributing
