@@ -17,7 +17,7 @@ scrapy >=1.5
 ## Run
 
 ```bash
-scrapy crawl link_checker_spider -a manifest_url=https://www.sangam.com/asset-manifest.json -a input_url=https://www.sangam.com -a fetchFromFile=true -a onlyBroken=true -a filepath=sangam-domains.json -o items.json
+scrapy crawl link_checker_spider -a manifest_url=https://www.sangam.com/asset-manifest.json -a input_url=https://www.sangam.com -a fetch_from_file=true -a only_broken=true -a filepath=sangam-domains.json -o items.json
 ```
 
 ```python
@@ -27,8 +27,8 @@ scrapy crawl link_checker_spider -a manifest_url=https://www.sangam.com/asset-ma
 # Command-line Arguments:
 manifest_url
 input_url
-onlyBroken
-fetchFromFile
+only_broken
+fetch_from_file
 filepath (required only when fetchFromFile=true)
 *** add your own domain list json in shared directory and provide name in filepath ***
 ```
