@@ -13,9 +13,10 @@ class LinkCheckerSpider(scrapy.Spider):
         'RETRY_HTTP_CODES': [],
     }
 
-	def __init__(self, manifest_url, input_url, allowed_domains=None, *args, **kwargs):
+	def __init__(self, manifest_url, input_url, fetchFromFile='false', onlyBroken='false', *args, **kwargs):
 		"""Initializes the instance"""
 		self.input_url = input_url
+		self.onlyBroken = onlyBroken
 		super(LinkCheckerSpider, self).__init__(*args, **kwargs)
 	
 		"""Fetch manifest from specified URL"""
@@ -25,8 +26,7 @@ class LinkCheckerSpider(scrapy.Spider):
 		self.asset_json = json.loads(request.data)
 
 		"""Generate URL list to be crawl"""
-		print('self.fetchFromFile', self.fetchFromFile)
-		if self.fetchFromFile == 'true':
+		if fetchFromFile == 'true':
 			"""Fetch domain list"""
 			with open(os.path.join(ApplicationConfig.get_shared_root(), self.filepath), 'r') as domains_file:
 			    domain_json = domains_file.read()
@@ -50,12 +50,18 @@ class LinkCheckerSpider(scrapy.Spider):
 			self.crawler.stats.inc_value('non_text_response')
 			return
 
-		if response.status >= 400 and response.status <= 599:
+		if self.onlyBroken == 'true':
+			if response.status >= 400 and response.status <= 599:
+				yield {
+					'url': response.url,
+					'status': 'invalid_http_status',
+					'http_status': response.status,
+				}
+		else:
 			yield {
-				'url': response.url,
-				'status': 'invalid_http_status',
-				'http_status': response.status,
-			}
+					'url': response.url,
+					'http_status': response.status,
+				}
 
 		max_reqs = self.settings.getint('MAX_REQUESTS', 0)
 		for key, asset in self.asset_json.items():
