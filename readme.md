@@ -14,6 +14,11 @@ urllib3
 scrapy >=1.5
 ```
 
+## Activate env
+```bash
+pipenv shell
+```
+
 ## Run
 
 ```bash
