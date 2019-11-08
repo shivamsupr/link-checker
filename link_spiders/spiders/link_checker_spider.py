@@ -65,10 +65,10 @@ class LinkCheckerSpider(scrapy.Spider):
                 'http_status': response.status,
             }
 
-        max_reqs = self.settings.getint('MAX_REQUESTS', 0)
-        for key, asset in self.asset_json['files'].items():
-            # self.start_urls.append("{}{}".format(domain, asset))
-            yield scrapy.Request("{}{}".format(self.input_url, asset), callback=self.parse, errback=self.errback)
+        # max_reqs = self.settings.getint('MAX_REQUESTS', 0)
+        # for key, asset in self.asset_json['files'].items():
+        #     # self.start_urls.append("{}{}".format(domain, asset))
+        #     yield scrapy.Request("{}{}".format(self.input_url, asset), callback=self.parse, errback=self.errback)
 
     def errback(self, err):
         """Handles an error"""
